@@ -33,11 +33,6 @@ jobs:
         run: |
           mkdir -p dist/${{ matrix.os }}-${{ matrix.arch }}
           output="dist/${{ matrix.os }}-${{ matrix.arch }}/"
-
-          # Windows needs .exe suffix
-          if [ "$GOOS" = "windows" ]; then
-            output="${output}.exe"
-          fi
       
           go build -o "$output" ./...
                 
