@@ -63,16 +63,17 @@ jobs:
           path: dist/
 
       - name: List files
-        run: pwd; ls -R ./
+        run: pwd; ls -R ./dist
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
-          files: dist/*.zip
+          files: ./*.zip
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           body: "## Changes in this release\n\n- Auto-generated release from GitHub Actions"
           draft: false
           prerelease: false
+          
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
