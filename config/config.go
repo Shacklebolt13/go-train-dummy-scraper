@@ -2,6 +2,8 @@ package config
 
 import (
 	"flag"
+	"fmt"
+	"os"
 	"scraper/internal/object"
 	"scraper/internal/raw_handler"
 	"strings"
@@ -42,6 +44,10 @@ func DefaultConfig() *ConfigImpl {
 
 func (c *ConfigImpl) ParseFromArgs() {
 	logType := flag.String("log", "ignore", "Log type")
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "Usage:\n    %s -log <string> 'regex1|regex2|https://url.com' 'regex1|regex2|https://another-url.com' ...\n", os.Args[0])
+		flag.PrintDefaults()
+	}
 	flag.Parse()
 	c.rawDataHandler = ParseLogType(*logType)
 
@@ -57,7 +63,8 @@ func (c *ConfigImpl) ParseFromArgs() {
 			c.urlsToScrape = append(c.urlsToScrape, object.NewJob(pageUrl, regexes))
 		}
 	} else {
-		c.urlsToScrape = []object.Job{}
+		flag.Usage()
+		os.Exit(1)
 	}
 }
 
