@@ -31,7 +31,7 @@ jobs:
           GOOS: ${{ matrix.os }}
           GOARCH: ${{ matrix.arch }}
         run: |
-          mkdir -p dist/${{ matrix.os }}-${{ matrix.arch }}
+          mkdir -p dist/${{ matrix.os }}-${{ matrix.arch }}/myapp
           output="dist/${{ matrix.os }}-${{ matrix.arch }}/myapp"
           
           # Windows needs .exe
