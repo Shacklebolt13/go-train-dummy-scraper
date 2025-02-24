@@ -38,8 +38,9 @@ jobs:
       
       - name: Package as ZIP
         run: |
-          cd dist
-          zip -r ${{ matrix.os }}-${{ matrix.arch }}.zip ${{ matrix.os }}-${{ matrix.arch }}*
+          for file in myapp-*; do
+            zip -r "${file}.zip" "$file"
+          done
           cd ..
 
       - name: Upload ZIP Artifacts
