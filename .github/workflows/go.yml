@@ -31,8 +31,8 @@ jobs:
           GOOS: ${{ matrix.os }}
           GOARCH: ${{ matrix.arch }}
         run: |
-          mkdir -p dist/${{ matrix.os }}-${{ matrix.arch }}/myapp
-          output="dist/app-${GOOS}-${GOARCH}"
+          mkdir -p dist/${{ matrix.os }}-${{ matrix.arch }}
+          output="dist/${{ matrix.os }}-${{ matrix.arch }}/"
 
           # Windows needs .exe suffix
           if [ "$GOOS" = "windows" ]; then
