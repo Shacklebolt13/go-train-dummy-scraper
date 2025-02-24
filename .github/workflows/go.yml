@@ -38,7 +38,7 @@ jobs:
       
       - name: Package as ZIP
         run: |
-          for file in myapp-*; do
+          for file in *; do
             zip -r "${file}.zip" "$file"
           done
           cd ..
