@@ -38,9 +38,11 @@ jobs:
       
       - name: Package as ZIP
         run: |
+          cd dist
           for file in *; do
             zip -r "${file}.zip" "$file"
           done
+          cd ..
 
       - name: Upload ZIP Artifacts
         uses: actions/upload-artifact@v4
