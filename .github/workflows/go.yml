@@ -35,12 +35,18 @@ jobs:
           output="dist/${{ matrix.os }}-${{ matrix.arch }}/"
       
           go build -o "$output" ./...
-                
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4  # Updated to v4
+      
+      - name: Package as ZIP
+        run: |
+          cd dist
+          zip -r myapp-${{ matrix.os }}-${{ matrix.arch }}.zip myapp-${{ matrix.os }}-${{ matrix.arch }}*
+          cd ..
+
+      - name: Upload ZIP Artifacts
+        uses: actions/upload-artifact@v4
         with:
-          name: myapp-${{ matrix.os }}-${{ matrix.arch }}
-          path: dist/
+          name: myapp-${{ matrix.os }}-${{ matrix.arch }}.zip
+          path: dist/myapp-${{ matrix.os }}-${{ matrix.arch }}.zip
 
   release:
     needs: build
@@ -49,8 +55,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download Artifacts
-        uses: actions/download-artifact@v4  # Updated to v4
+      - name: Download ZIP Artifacts
+        uses: actions/download-artifact@v4
         with:
           path: dist/
 
@@ -60,7 +66,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: dist/*/*
+          files: dist/*.zip
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           body: "## Changes in this release\n\n- Auto-generated release from GitHub Actions"
