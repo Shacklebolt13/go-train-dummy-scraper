@@ -32,15 +32,15 @@ jobs:
           GOARCH: ${{ matrix.arch }}
         run: |
           mkdir -p dist/${{ matrix.os }}-${{ matrix.arch }}/myapp
-          output="dist/${{ matrix.os }}-${{ matrix.arch }}/myapp"
-          
-          # Windows needs .exe
+          output="dist/app-${GOOS}-${GOARCH}"
+
+          # Windows needs .exe suffix
           if [ "$GOOS" = "windows" ]; then
             output="${output}.exe"
           fi
-          
+      
           go build -o "$output" ./...
-          
+                
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4  # Updated to v4
         with:
