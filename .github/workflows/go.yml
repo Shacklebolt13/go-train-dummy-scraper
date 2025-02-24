@@ -68,12 +68,11 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ./*.zip
+          files: dist/**/*.zip
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           body: "## Changes in this release\n\n- Auto-generated release from GitHub Actions"
           draft: false
           prerelease: false
-          
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
