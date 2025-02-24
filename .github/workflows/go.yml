@@ -39,14 +39,14 @@ jobs:
       - name: Package as ZIP
         run: |
           cd dist
-          zip -r myapp-${{ matrix.os }}-${{ matrix.arch }}.zip myapp-${{ matrix.os }}-${{ matrix.arch }}*
+          zip -r ${{ matrix.os }}-${{ matrix.arch }}.zip ${{ matrix.os }}-${{ matrix.arch }}*
           cd ..
 
       - name: Upload ZIP Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: myapp-${{ matrix.os }}-${{ matrix.arch }}.zip
-          path: dist/myapp-${{ matrix.os }}-${{ matrix.arch }}.zip
+          name: ${{ matrix.os }}-${{ matrix.arch }}.zip
+          path: dist/${{ matrix.os }}-${{ matrix.arch }}.zip
 
   release:
     needs: build
